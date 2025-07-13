@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Inspection;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Turbine;
 
@@ -10,6 +11,7 @@ use App\Models\Turbine;
  */
 class InspectionFactory extends Factory
 {
+    protected $model = Inspection::class;
     /**
      * Define the model's default state.
      *

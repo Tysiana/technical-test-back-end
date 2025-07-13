@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class TurbineFactory extends Factory
 {
+    protected $model = Turbine::class;
     /**
      * Define the model's default state.
      *
