@@ -11,16 +11,29 @@ use App\Models\Inspection;
 use App\Models\Grade;
 use App\Models\ComponentType;
 use App\Models\GradeType;
+use App\Models\Service;
 
 class ApiEndpointsTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected $plainToken = 'test-api-key';
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $service = new Service();
+        $service->name = 'test-service';
+        $service->token = hash('sha256', $this->plainToken);
+        $service->save();
+    }
+
     public function test_farms_index_returns_data()
     {
         $farms = Farm::factory()->count(2)->create();
 
-        $response = $this->getJson('/api/farms');
+        $response = $this->withHeader('Authorization', 'Bearer ' . $this->plainToken)
+            ->getJson('/api/farms');
 
         $response->assertStatus(200)
             ->assertJsonStructure([
@@ -34,7 +47,8 @@ class ApiEndpointsTest extends TestCase
     {
         $turbines = Turbine::factory()->count(2)->create();
 
-        $response = $this->getJson('/api/turbines');
+        $response = $this->withHeader('Authorization', 'Bearer ' . $this->plainToken)
+            ->getJson('/api/turbines');
 
         $response->assertStatus(200)
             ->assertJsonStructure([
@@ -47,7 +61,8 @@ class ApiEndpointsTest extends TestCase
     {
         $components = Component::factory()->count(2)->create();
 
-        $response = $this->getJson('/api/components');
+        $response = $this->withHeader('Authorization', 'Bearer ' . $this->plainToken)
+            ->getJson('/api/components');
 
         $response->assertStatus(200)
             ->assertJsonStructure([
@@ -59,7 +74,8 @@ class ApiEndpointsTest extends TestCase
     {
         $inspections = Inspection::factory()->count(2)->create();
 
-        $response = $this->getJson('/api/inspections');
+        $response = $this->withHeader('Authorization', 'Bearer ' . $this->plainToken)
+            ->getJson('/api/inspections');
 
         $response->assertStatus(200)
             ->assertJsonStructure([
@@ -71,7 +87,8 @@ class ApiEndpointsTest extends TestCase
     {
         $componentTypes = ComponentType::factory()->count(2)->create();
 
-        $response = $this->getJson('/api/component-types');
+        $response = $this->withHeader('Authorization', 'Bearer ' . $this->plainToken)
+            ->getJson('/api/component-types');
 
         $response->assertStatus(200)
             ->assertJsonStructure([
@@ -83,7 +100,8 @@ class ApiEndpointsTest extends TestCase
     {
         $gradeTypes = GradeType::factory()->count(2)->create();
 
-        $response = $this->getJson('/api/grade-types');
+        $response = $this->withHeader('Authorization', 'Bearer ' . $this->plainToken)
+            ->getJson('/api/grade-types');
 
         $response->assertStatus(200)
             ->assertJsonStructure([

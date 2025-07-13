@@ -11,22 +11,30 @@ use App\Models\Inspection;
 use App\Models\Grade;
 use App\Models\ComponentType;
 use App\Models\GradeType;
+use App\Models\Service;
 
 class ApiRelationshipsTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected $plainToken = 'test-api-key';
+
     protected function setUp(): void
     {
         parent::setUp();
         \Faker\Factory::create()->unique(true);
+        $service = new Service();
+        $service->name = 'test-service';
+        $service->token = hash('sha256', $this->plainToken);
+        $service->save();
     }
 
     public function test_farm_turbines_relationship()
     {
         $farm = Farm::factory()->create();
         Turbine::factory()->count(3)->create(['farm_id' => $farm->id]);
-        $response = $this->getJson("/api/farms/{$farm->id}/turbines");
+        $response = $this->withHeader('Authorization', 'Bearer ' . $this->plainToken)
+            ->getJson("/api/farms/{$farm->id}/turbines");
         $response->assertStatus(200)->assertJsonStructure([
             'data' => [
                 '*' => [
@@ -52,7 +60,8 @@ class ApiRelationshipsTest extends TestCase
                 'grade' => 2
             ]);
         }
-        $response = $this->getJson("/api/turbines/{$turbine->id}/components");
+        $response = $this->withHeader('Authorization', 'Bearer ' . $this->plainToken)
+            ->getJson("/api/turbines/{$turbine->id}/components");
         $response->assertStatus(200)->assertJsonStructure([
             'data' => [
                 '*' => [
@@ -73,7 +82,8 @@ class ApiRelationshipsTest extends TestCase
             'grade_type_id' => 1,
             'grade' => 2
         ]);
-        $response = $this->getJson("/api/components/{$component->id}/grades");
+        $response = $this->withHeader('Authorization', 'Bearer ' . $this->plainToken)
+            ->getJson("/api/components/{$component->id}/grades");
 
         $response->assertStatus(200)->assertJsonStructure([
             'data' => [
@@ -96,7 +106,8 @@ class ApiRelationshipsTest extends TestCase
             'grade_type_id' => 1,
             'grade' => 3
         ]);
-        $response = $this->getJson("/api/inspections/{$inspection->id}/grades");
+        $response = $this->withHeader('Authorization', 'Bearer ' . $this->plainToken)
+            ->getJson("/api/inspections/{$inspection->id}/grades");
         $response->assertStatus(200)->assertJsonStructure([
             'data' => [
                 '*' => [
