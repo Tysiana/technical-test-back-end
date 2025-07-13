@@ -74,7 +74,18 @@ composer install --ignore-platform-reqs
 
 ## Your Notes
 ### Setup notes:
+composer setup commands as usual
 php artisan migrate && php artisan db:seed
+
+Generate your API token: 
+php artisan tinker
+```php
+$service = new App\Models\Service;
+$service->name = 'internal-api';
+$service->token = hash('sha256', 'your-plain-api-key');
+$service->save();
+```
+The add your token in postman using Bearer Token Auth type
 
 ### Thought process
 I thought a farm would be too large for a single inspection and so inspection is tied to a turbine as well as grades. 
@@ -82,11 +93,11 @@ Grades are done per inspection per component of each inspected turbine.
 As I was browsing the app I realised I misunderstood GradeTypes and in fact I imagine the IDs were supposed to be 1-5 with name describing the condition of it. I throught a grade type in this case would represent each property of the component. In my setup I've declared them as wear and corrosion as I thought that would be suitable. The grades themselves are stored in grades table and the appropriate grade label is taken from an enum class.
 
 ### Had I had more time
-I would definetely introduce Sanctum api auth with token generation per user.
 I would've introduced a POST/PUT methods for inspections and inspection grades to allow for data management. 
 I would tidy up the api routes and create API Controllers to group them by for handling this together with appropriate post/put methods having their own Form Request classes for better validation handling.
 Specific API Error handler would be good as well for any custom error returns.
 I also think there's a lot of api requests per model that is then stitched together in the front-end. I would edit the resources to load their relationships where needed to reduce unnecessary data load.
+Specific Auth test would be required for Unauthorised response as well as further validation tests would be necessary with introduction of post/put calls.
 
 
 
