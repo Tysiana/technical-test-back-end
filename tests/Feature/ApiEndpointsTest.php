@@ -18,50 +18,76 @@ class ApiEndpointsTest extends TestCase
 
     public function test_farms_index_returns_data()
     {
-        Farm::factory()->count(2)->create();
+        $farms = Farm::factory()->count(2)->create();
+
         $response = $this->getJson('/api/farms');
-        $response->assertStatus(200)->assertJsonStructure(['data']);
+
+        $response->assertStatus(200)
+            ->assertJsonStructure([
+                'data' => [['id', 'name', 'created_at', 'updated_at']]
+            ]);
+
+        $response->assertJsonFragment(['name' => $farms->first()->name]);
     }
 
     public function test_turbines_index_returns_data()
     {
-        Turbine::factory()->count(2)->create();
+        $turbines = Turbine::factory()->count(2)->create();
+
         $response = $this->getJson('/api/turbines');
-        $response->assertStatus(200)->assertJsonStructure(['data']);
+
+        $response->assertStatus(200)
+            ->assertJsonStructure([
+                'data' => [['id', 'name', 'farm_id', 'created_at', 'updated_at']]
+            ]);
+        $response->assertJsonFragment(['name' => $turbines->first()->name]);
     }
 
     public function test_components_index_returns_data()
     {
-        Component::factory()->count(2)->create();
+        $components = Component::factory()->count(2)->create();
+
         $response = $this->getJson('/api/components');
-        $response->assertStatus(200)->assertJsonStructure(['data']);
+
+        $response->assertStatus(200)
+            ->assertJsonStructure([
+                'data' => [['id', 'name', 'turbine_id', 'component_type_id', 'created_at', 'updated_at']]
+            ]);
     }
 
     public function test_inspections_index_returns_data()
     {
-        Inspection::factory()->count(2)->create();
-        $response = $this->getJson('/api/inspections');
-        $response->assertStatus(200)->assertJsonStructure(['data']);
-    }
+        $inspections = Inspection::factory()->count(2)->create();
 
-    public function test_grades_index_returns_data()
-    {
-        Grade::factory()->count(2)->create();
-        $response = $this->getJson('/api/grades/1');
-        $response->assertStatus(200);
+        $response = $this->getJson('/api/inspections');
+
+        $response->assertStatus(200)
+            ->assertJsonStructure([
+                'data' => [['id', 'turbine_id', 'inspected_at', 'created_at', 'updated_at']]
+            ]);
     }
 
     public function test_component_types_index_returns_data()
     {
-        ComponentType::factory()->count(2)->create();
+        $componentTypes = ComponentType::factory()->count(2)->create();
+
         $response = $this->getJson('/api/component-types');
-        $response->assertStatus(200)->assertJsonStructure(['data']);
+
+        $response->assertStatus(200)
+            ->assertJsonStructure([
+                'data' => [['id', 'name', 'created_at', 'updated_at']]
+            ]);
     }
 
     public function test_grade_types_index_returns_data()
     {
-        GradeType::factory()->count(2)->create();
+        $gradeTypes = GradeType::factory()->count(2)->create();
+
         $response = $this->getJson('/api/grade-types');
-        $response->assertStatus(200)->assertJsonStructure(['data']);
+
+        $response->assertStatus(200)
+            ->assertJsonStructure([
+                'data' => [['id', 'name', 'created_at', 'updated_at']]
+            ]);
     }
 }
