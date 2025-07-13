@@ -11,6 +11,7 @@ class ComponentResource extends JsonResource
         return [
             'id' => $this->id,
             'component_type_id' => $this->component_type_id,
+            'name' => $this->name,
             'turbine_id' => $this->turbine_id,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

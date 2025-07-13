@@ -12,7 +12,7 @@ class Grade extends Model
     protected $fillable = ['grade', 'grade_type_id', 'component_id', 'inspection_id'];
 
     protected $casts = [
-        'grade' => 'unsignedInteger',
+        'grade' => 'integer',
     ];
 
     public function gradeType()

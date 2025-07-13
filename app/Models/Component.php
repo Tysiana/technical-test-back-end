@@ -21,9 +21,15 @@ class Component extends Model
         return $this->belongsTo(ComponentType::class);
     }
 
+
     public function grades()
     {
         return $this->hasMany(Grade::class);
+    }
+
+    public function grade()
+    {
+        return $this->hasOne(Grade::class)->latestOfMany();
     }
 
     public function inspections()

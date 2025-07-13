@@ -20,6 +20,7 @@ class InspectionFactory extends Factory
         return [
             'name' => $this->faker->sentence(3),
             'turbine_id' => Turbine::inRandomOrder()->first()->id ?? Turbine::factory(),
+            'inspected_at' => $this->faker->dateTimeBetween('-1 year', 'now'),
         ];
     }
 }

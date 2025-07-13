@@ -2,11 +2,11 @@
 
 namespace Database\Factories;
 
-use App\ComponentType;
+use App\Models\ComponentType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\ComponentType>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ComponentType>
  */
 class ComponentTypeFactory extends Factory
 {

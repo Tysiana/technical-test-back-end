@@ -11,7 +11,7 @@ class Farm extends Model
 
     protected $fillable = ['name'];
 
-    private function turbines()
+    public function turbines()
     {
         return $this->hasMany(Turbine::class);
     }

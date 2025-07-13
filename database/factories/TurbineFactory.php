@@ -21,8 +21,8 @@ class TurbineFactory extends Factory
         return [
             'farm_id' => Farm::factory(), 
             'name' => $this->faker->unique()->word(),
-            'latitude' => $this->faker->latitude(55.0, 56.0),
-            'longitude' => $this->faker->longitude(-4.0, -2.0),
+            'lat' => $this->faker->latitude(55.0, 56.0),
+            'lng' => $this->faker->longitude(-4.0, -2.0),
         ];
     }
 }

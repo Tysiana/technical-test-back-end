@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('inspections', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->timestamp('inspected_at')->nullable();
             $table->foreignId('turbine_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
