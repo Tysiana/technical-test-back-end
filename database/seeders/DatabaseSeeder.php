@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             FarmSeeder::class,
             TurbineSeeder::class,
+            ComponentSeeder::class,
             ExampleGradedComponentsSeeder::class,
         ]);
     }

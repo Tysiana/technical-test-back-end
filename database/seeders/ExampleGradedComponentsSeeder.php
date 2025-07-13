@@ -6,6 +6,7 @@ use Illuminate\Database\Seeder;
 use App\Models\Component;
 use App\Models\Grade;
 use App\Models\Inspection;
+use App\Models\Turbine;
 
 class ExampleGradedComponentsSeeder extends Seeder
 {
@@ -16,11 +17,16 @@ class ExampleGradedComponentsSeeder extends Seeder
      */
     public function run()
     {
-        $inspections = Inspection::factory()->count(3)->create();
+        $turbines = Turbine::all();
 
-        $components = Component::factory()->count(10)->create();
+        foreach ($turbines as $turbine) {
+            $components = $turbine->components;
+            if ($components->isEmpty()) continue;
 
-        foreach ($inspections as $inspection) {
+            $inspection = Inspection::factory()->create([
+                'turbine_id' => $turbine->id,
+            ]);
+
             foreach ($components as $component) {
                 Grade::factory()->create([
                     'component_id' => $component->id,
