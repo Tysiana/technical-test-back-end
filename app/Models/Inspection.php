@@ -10,4 +10,9 @@ class Inspection extends Model
     use HasFactory;
 
     protected $fillable = ['name', 'turbine_id'];
+
+    public function turbine()
+    {
+        return $this->belongsTo(Turbine::class);
+    }
 }

@@ -10,4 +10,9 @@ class Farm extends Model
     use HasFactory;
 
     protected $fillable = ['name'];
+
+    private function turbines()
+    {
+        return $this->hasMany(Turbine::class);
+    }
 }

@@ -10,4 +10,23 @@ class Grade extends Model
     use HasFactory;
 
     protected $fillable = ['grade', 'grade_type_id', 'component_id', 'inspection_id'];
+
+    protected $casts = [
+        'grade' => 'unsignedInteger',
+    ];
+
+    public function gradeType()
+    {
+        return $this->belongsTo(GradeType::class);
+    }
+
+    public function component()
+    {
+        return $this->belongsTo(Component::class);
+    }
+    
+    public function inspection()
+    {
+        return $this->belongsTo(Inspection::class);
+    }
 }
