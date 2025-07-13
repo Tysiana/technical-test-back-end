@@ -21,5 +21,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        $this->call([
+            FarmSeeder::class,
+            TurbineSeeder::class,
+            ExampleGradedComponentsSeeder::class,
+        ]);
     }
 }
