@@ -35,7 +35,7 @@ use App\Models\Inspection;
 */
 // Farms
 Route::get('farms', function () {
-     return FarmResource::collection(Farm::all());
+     return FarmResource::collection(Farm::paginate());
 });
 Route::get('farms/{farm}', function (Farm $farm) {
     return new FarmResource($farm);
@@ -49,7 +49,7 @@ Route::get('farms/{farm}/turbines/{turbine}', function (Farm $farm, Turbine $tur
 
 // Turbines
 Route::get('turbines', function () {
-     return TurbineResource::collection(Turbine::all());
+     return TurbineResource::collection(Turbine::paginate());
 });
 
 Route::get('turbines/{turbine}', function (Turbine $turbine) {
@@ -70,7 +70,7 @@ Route::get('turbines/{turbine}/inspections/{inspection}', function (Turbine $tur
 
 // Components
 Route::get('components', function () {
-     return new ComponentCollection(Component::all());
+     return new ComponentCollection(Component::paginate());
 });
 Route::get('components/{component}', function (Component $component) {
     return new ComponentResource($component);
@@ -86,7 +86,7 @@ Route::get('components/{component}/grades/{grade}', function (Component $compone
 
 // Inspections
 Route::get('inspections', function () {
-     return new InspectionCollection(Inspection::all());
+     return new InspectionCollection(Inspection::paginate());
 });
 
 Route::get('inspections/{inspection}', function (Inspection $inspection) {
