@@ -11,6 +11,8 @@ use App\Http\Resources\InspectionResource;
 use App\Http\Resources\GradeCollection;
 use App\Http\Resources\GradeTypeCollection;
 use App\Http\Resources\GradeResource;
+use App\Http\Resources\ComponentTypeResource;
+use App\Http\Resources\GradeTypeResource;
 use App\Models\Grade;
 use App\Models\Component;
 use Illuminate\Http\Request;
@@ -49,16 +51,19 @@ Route::get('farms/{farm}/turbines/{turbine}', function (Farm $farm, Turbine $tur
 Route::get('turbines', function () {
      return TurbineResource::collection(Turbine::all());
 });
+
 Route::get('turbines/{turbine}', function (Turbine $turbine) {
      return new TurbineResource($turbine);
 });
+
 Route::get('turbines/{turbine}/components', function (Turbine $turbine) {
      return new ComponentCollection($turbine->components);
 });
-Route::get('turbines/{turbine}/components/{component}', 'App\\Http\\Controllers\\ComponentController@show');
+
 Route::get('turbines/{turbine}/inspections', function (Turbine $turbine) {
      return new InspectionCollection($turbine->inspections);
 });
+
 Route::get('turbines/{turbine}/inspections/{inspection}', function (Turbine $turbine, Inspection $inspection) {
     return new InspectionResource($inspection);
 });
@@ -105,7 +110,7 @@ Route::get('component-types', function () {
      return new ComponentTypeCollection(ComponentType::all());
 });
 Route::get('component-types/{componentType}', function (ComponentType $componentType) {
-    return new ComponentResource($componentType);
+    return new ComponentTypeResource($componentType);
 }); 
 
 // Grade Types
@@ -113,5 +118,5 @@ Route::get('grade-types', function () {
      return new GradeTypeCollection(GradeType::all());
 });
 Route::get('grade-types/{gradeType}', function (GradeType $gradeType) {
-    return new GradeResource($gradeType);
+    return new GradeTypeResource($gradeType);
 });
